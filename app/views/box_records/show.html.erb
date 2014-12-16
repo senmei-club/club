@@ -1,0 +1,77 @@
+#encoding: utf-8
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%=flash[:notice] %>
+    </div>
+  <% end %>
+</div>
+
+<div class="container">
+<p>
+  <h3>包廂狀況歷史記錄</h3>
+</p>
+  <div class="container well">
+    <p>
+      <button type="button" class="btn btn-inverse" value=""><%=@bs[@box_record.box_id]%></button>
+    </p>
+    <ul>
+      <li>開始時間: <%= @box_record.start_time.strftime("%Y-%m-%d %H:%M") %> </li>
+      <li>結束時間: <%= @box_record.end_time.strftime("%Y-%m-%d %H:%M") %> </li>
+      <li>服務經理: <span class="manager"><%= @usernames[@box_record.manager_id] %></span></li>
+      <li>客人數: <span class="customer_count"><%=@box_record.customers %></span></li>
+    </ul>
+
+    <%# link_to('編輯', "/box_records/#{@box_record[:id]}/find_or_create", class: "btn btn-primary") if can? :update, BoxRecord %> 
+    <%= link_to('編輯', edit_box_record_path(@box_record), class: "btn btn-primary") if can? :update, BoxRecord %> 
+    <%= link_to '返回', box_records_path , class: "btn"%>
+  </div>
+  
+  <div class="container">
+    <%
+      @waiters.each do |user_id, user_records|  
+    %>
+      <table class="table">
+        <tr>
+          <th class="waiter" width="15%">姓名</th>
+          <th class="entry" width="35%">進入時間</th>
+          <th class="leave" width="35%">離開時間</th>
+          <th class="minutes" width="15%">小記</th>
+        </tr>
+        
+        <%
+          i = 0
+          user_time_sum = 0
+          user_records.each do |user_record|
+          
+        %>  
+          <tr>
+          <%
+          i += 1
+          
+          if i == 1
+          %>
+            <td rowspan='<%=user_records.size%>'><%=@usernames[user_id]%></td> 
+          <% end %>
+          
+            <td><%= user_record[:entry_time].strftime("%F %T") %></td>
+            <td><%= user_record[:leave_time].strftime("%F %T") unless user_record[:leave_time].nil? %></td>
+            <td>
+              <%
+                unless user_record[:leave_time].nil? 
+                  tmp = user_record[:leave_time] - user_record[:entry_time]
+                  user_time_sum += tmp
+                end
+              %>
+              <%=(Time.local(2000, 1, 1) + tmp).strftime("%T") unless user_record[:leave_time].nil? %>
+            </td>
+          </tr>
+        <% end %>
+        
+        <td colspan="3">總計</td>
+        <td class><%=(Time.local(2000, 1, 1) + (user_time_sum)).strftime("%T")%></td>
+      </table>
+    <% end %>
+  
+  </div>
+</div>

@@ -1,0 +1,36 @@
+#encoding: utf-8
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @box.id %>
+</p>
+
+<p>
+  <b>Machine:</b>
+  <%= @box.machine_id %>
+</p>
+
+<p>
+  <b>r_no:</b>
+  <%= @box.r_no %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @box.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @box.size_type %>
+</p>
+
+<p>
+  <b>css_class:</b>
+  <%= @box.css_class %>
+</p>
+
+
+<%= link_to 'Edit', edit_box_path(@box) %> |
+<%= link_to 'Back', boxes_path %>

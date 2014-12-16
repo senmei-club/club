@@ -1,0 +1,44 @@
+#encoding: utf-8
+<p>
+  <%= link_to('新增進出記錄', new_user_box_record_path, class: "btn btn-warning") if can? :create, UserBoxRecord %>
+</p>
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>時間</th>
+    <th>包廂</th>
+    <th>人員</th>
+    <th>人員姓名</th>
+
+    <th></th>
+    
+    <% if can? :update, UserBoxRecord %>
+      <th></th>
+    <% end %>
+    
+    <% if can? :destroy, UserBoxRecord %>
+      <th></th>
+    <% end %>
+  </tr>
+
+<% @user_box_records.each do |user_box_record| %>
+  <tr>
+    <td><%= user_box_record.time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    <td><%= @boxes["#{user_box_record.box_id}"][:name] %></td>
+    <td><%= @users["#{user_box_record.card_id}"]? @users["#{user_box_record.card_id}"][:nickname] : "" %></td>
+    <td><%= @users["#{user_box_record.card_id}"]? @users["#{user_box_record.card_id}"][:name] : "" %></td>
+
+    <td><%= link_to '檢視', user_box_record, class: "btn btn-info" %></td>
+    
+    <% if can? :update, UserBoxRecord %>
+      <td><%= link_to '編輯', edit_user_box_record_path(user_box_record), class: "btn btn-primary" %></td>
+    <% end %>
+     
+    <% if can? :destroy, UserBoxRecord  %>
+      <td><%= link_to '刪除', user_box_record, confirm: '確定要刪除?', method: :delete, class: "btn btn-danger" %></td>
+    <% end %>
+
+    </tr>
+<% end %>
+</table>
+
+<%= paginate @user_box_records %>

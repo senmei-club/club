@@ -1,0 +1,384 @@
+html {
+    background-color: #FFF;
+    font-family: 15px/ 1.231 arial, helvetica, clean, sans-serif;
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    font-family: "Droid Sans", arial, sans-serif;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+h1.title {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+}
+
+/* clear */
+.clearfix:after {
+   content: ".";
+   display: block;
+   clear: both;
+   visibility: hidden;
+   line-height: 0;
+   height: 0;
+}
+
+.clearfix {
+   display: inline-block;
+}
+
+html[xmlns] .clearfix {
+   display: block;
+}
+
+* html .clearfix {
+   height: 1%;
+   overflow: visible;
+}
+/* clear end */
+
+#main_container{
+  margin: 0px auto;
+}
+
+#login_main_container{
+  border: 0px solid #CCC;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 300px;
+  height: 300px;
+}
+
+#login_container{
+  border: 0px solid #CCC;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-left: 20px;
+  height: 60px;
+}
+
+.timer_alert{
+  color: red;
+}
+
+/** index **/
+  #floor_container{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border: 0px solid #CCC;
+    margin: 0px auto;
+    width: 1900px;
+    height: 1000px;
+  }
+
+  #row_1{
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    width: 1700px;
+    height: 220px;
+  }
+
+  #row_2{
+    position: absolute;
+    left: 300px;
+    top: 230px;
+    width: 1400px;
+    height: 270px;
+  }
+
+  #row_3{
+    position: absolute;
+    left: 420px;
+    top: 500px;
+    width: 1050px;
+    height: 270px;
+  }
+
+  #row_4{
+    position: absolute;
+    left: 1100px;
+    top: 780px;
+    width: 500px;
+    height: 250px;
+  }
+
+  #col_1{
+    position: absolute;
+    left: 20px;
+    top: 230px;
+    width: 250px;
+    height: 800px;
+  }
+
+  #col_2{
+    position: absolute;
+    left: 1650px;
+    top: 0px;
+    width: 250px;
+    height: 1000px;
+  }
+
+  .big_room  .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 240px;
+    width: 360px;
+  }
+
+  .big_room_2 .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 200px;
+    width: 270px;
+  }
+
+  .big_room_3 .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 200px;
+    width: 340px;
+  }
+
+  .normal_room .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 200px;
+    width: 230px;
+  }
+
+  .small_room .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 240px;
+    width: 200px;
+  }
+
+  .small_room_v .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 100px;
+    width: 190px;
+  }
+
+  .small_room_v2 .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 40px;
+    width: 230px;
+  }
+
+  .big_room_v .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 220px;
+    width: 230px;
+  }
+
+  .big_room_v2 .room_div{
+    border: 0px solid #AAA;
+    margin: 5px auto;
+    height: 290px;
+    width: 230px;
+  }
+
+  #status_block{
+    position: absolute;
+    left: 350px;
+    top: 770px;
+    border: 0px solid #333333;
+    margin: 5px auto;
+    padding: 5px;
+    height: 200px;
+    width: 600px;
+  }
+
+  #status_box{
+    border: 3px solid #333333;
+    
+  }
+  
+  /*override bootstrap*/
+
+  #floor_container .thumbnails li{
+    margin:5px;
+  }
+  
+  #floor_container .thumbnails li a{
+    border: 1px solid #000000;
+  }
+  
+  .thumbnails .thumbnail .badge {
+    font-size: 110%;
+    padding: 3px 9px 3px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+  }
+  
+  .thumbnails .room_div .waiters{
+    margin-left: 0px;
+  }
+  
+  .thumbnails .room_div .waiters div{
+    margin-left: 0px;
+    min-height: 100%;
+  }
+  
+  .thumbnail {
+    line-height: 100%;
+  }
+  
+  .waiters .more_link:hover{
+    font-weight: bold;
+  }
+  
+  .badge-important{
+    background-color: #000;
+    color: #FFF
+  }
+  
+  .badge-success {
+    background-color: #FFF;
+    color: #000;
+    border-color: #000;
+  }
+  
+/* override bootstrap end */
+
+/* report table defs */
+.report_table .box_name{
+  width: 40px;
+}
+
+.report_table .box_manager{
+  width: 120px;
+}
+
+.report_table .start_time{
+  width: 140px;
+}
+
+.report_table .end_time{
+  width: 140px;
+}
+
+.report_table .table .waiter {
+  width: 80px;
+}
+ 
+ /* report table defs  end*/
+
+/* waiter list start */   
+.waiters .thumbnails > li{
+  margin: 0px !important;
+}
+
+.waiters .thumbnails{
+  margin: 0px !important;
+}
+
+.wname_only_container .thumbnails > li{
+  margin: 0px !important;
+}
+
+.wname_only_container .thumbnails{
+  margin: 0px !important;
+}
+
+.waiters .thumbnails .thumbnail {
+  border: 0px solid #FFF;
+  padding: 0px;
+}
+
+.wname_only_container .thumbnails .thumbnail {
+  border: 0px solid #FFF;
+  padding: 0px;
+}
+
+.waiters .thumbnails .thumbnail > div {
+  float: left;
+  position: relative;
+}
+
+.waiters .thumbnails .thumbnail .waiter {
+  width: 55%;
+}
+
+.waiters .thumbnails .thumbnail .waiter_stay_time_div {
+  width: 45%;
+}
+
+.big_room .waiters .thumbnails > li{
+  width: 50%;
+}
+
+.big_room_2 .waiters .thumbnails > li{
+  width: 50%;
+}
+
+.big_room_3 .waiters .thumbnails > li{
+  width: 50%;
+}
+
+.big_room_v .waiters .thumbnails > li{
+  width: 50%;
+}
+
+.big_room_v2 .waiters .thumbnails > li{
+  width: 50%;
+}
+
+.normal_room .waiters .thumbnails > li{
+  width: 70%;
+}
+
+.small_room .waiters .thumbnails > li{
+  width: 70%;
+}
+
+.small_room_v2 .waiters .thumbnails > li{
+  width: 100%;
+}
+
+.wname_only_container .waiter {
+  float: left;
+}
+
+.big_room_v2 .wname_only_container .thumbnails > li{
+  width: 50%;
+}
+
+.normal_room .wname_only_container .thumbnails > li{
+  width: 50%;
+}
+
+.small_room .wname_only_container .thumbnails > li{
+  width: 50%;
+}
+
+.big_room_v .wname_only_container .thumbnails > li{
+  width: 50%;
+}
+
+.big_room_3 .wname_only_container .thumbnails > li{
+  width: 25%;
+}
+/* waiter list def end */  

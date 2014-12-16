@@ -1,0 +1,115 @@
+#encoding: utf-8
+<div id="floor_container">
+  <!-- top row-->
+  <div id="row_1">
+    <ul class="thumbnails">
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["222"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["220"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["218"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["216"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["212"]} %>
+    </ul>
+  </div>
+  <!-- top end -->
+
+  <!-- middle row1 -->
+  <div id="row_2">
+    <ul class="thumbnails">
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["221"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["219"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["217"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["215"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["213"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["211"]} %>
+    </ul>
+  </div>
+  <!-- middle row1 end -->
+
+  <!-- middle row2 -->
+  <div id="row_3">
+    <ul class="thumbnails">
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["counter"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["201"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["206"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["207"]} %>
+    </ul>
+  </div>
+  <!-- middle row2 end -->
+
+  <!-- bottom row -->
+  <div id="row_4">
+    <ul class="thumbnails">
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["203"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["205"]} %> 
+    </ul>
+  </div>
+  <!-- bottom row end -->
+
+  <!-- left side -->
+  <div id="col_1">
+    <ul class="thumbnails">
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["rest1"]} %>
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["rest2"]} %>
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["toilet1"]} %>
+    </ul>
+  </div>
+  <!-- left side end -->
+
+  <!-- right side -->
+  <div id="col_2">
+    <ul class="thumbnails">
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["210"]} %>
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["209"]} %>  
+      <%= render partial: "box_thumb_normal", locals: { bs: @bs["208"]} %>
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["toilet2"]} %>
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["kitchen"]} %>
+    </ul>
+  </div>
+  <!-- right side end -->
+
+  <!-- status bar -->
+  <div id="status_block">
+    <!-- alert timer config for js -->
+    <input type="hidden" id="stay_alert_time_config" name="stay_alert_time_config" value=" <%=@configs["stay_alert_time"] ||= 900 %> ">
+    <input type="hidden" id="elapsed_alert_time_config" name="elapsed_alert_time_config" value=" <%=@configs["elapsed_alert_time"] ||= 900 %> ">
+    <!-- system config end -->
+    <ul class="thumbnails">
+      <li >
+        <a id="status_box" href="#" class="normal_room thumbnail"  onclick="javascript: return false;">
+          <div class="room_div">
+            <span>來客總數:<span id="total_customers_count"><%= @total_customers %></span></span><br/>
+            <span>開啟包廂:<span id="active_boxes_count"></span></span><br/>
+            <span>尚有包廂:<span id="available_boxes_count"></span></span><br/>
+
+            <input type="hidden" id="data_indexes" name="data_indexes" value="<%=@bs.keys.to_json%>">
+            <input type="hidden" id="interval_ids" name="interval_ids" value="[]">
+
+          </div>
+        </a>
+      </li>
+      <%= render partial: "box_thumb_minimize", locals: { bs: @bs["rest3"]} %>
+    </ul>
+  </div>
+  <!-- status bar end -->
+
+</div>
+
+<script>
+
+$(document).ready(function(){
+  update_counters();
+  $('[id^="timer_"]').timer();
+  
+  $('a[id^="room_"]').mouseover(function(){
+    $(this).css({"background-color":"#DDDDDD"});
+  });
+
+  $('a[id^="room_"]').mouseout(function(){
+    $(this).css({"background-color": "#FFFFFF"});
+  });
+  
+  renew();
+  setInterval('renew()',3000);
+});
+
+</script>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  start_time: 2012-06-27 20:16:15
+  end_time: 2012-06-27 20:16:15
+  box_id: 1
+  manager_id: 1
+
+two:
+  start_time: 2012-06-27 20:16:15
+  end_time: 2012-06-27 20:16:15
+  box_id: 1
+  manager_id: 1

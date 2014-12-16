@@ -1,0 +1,50 @@
+#encoding: utf-8
+<%= form_for(@user_box_record,{ class:"form-horizontal"}) do |f| %>
+  <% if @user_box_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_box_record.errors.count, "error") %> prohibited this user_box_record from being saved:</h2>
+
+      <ul>
+      <% @user_box_record.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :id %>
+  <table class="table">
+    <tr>
+      <td>
+        <%= f.label "使用者卡號", div:false %>
+      </td>
+      <td>
+        <%= f.text_field :card_id %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label "包廂ID"%>
+      </td>
+      <td>
+        <%= f.select :box_id,@bs %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label "時間"%>
+      </td>
+      <td>
+        <%= f.datetime_select :time %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.submit(value="儲存",class: "btn btn-primary") %>
+      </td>
+      <td>
+        <%= link_to '取消', user_box_records_path , class: "btn" %>
+      </td>
+    </tr>
+  </table>
+<% end %>

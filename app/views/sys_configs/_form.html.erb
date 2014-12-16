@@ -1,0 +1,37 @@
+#encoding: utf-8
+<%= form_for(@sys_config ) do |f| %>
+  <% if @sys_config.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sys_config.errors.count, "error") %> prohibited this sys_config from being saved:</h2>
+
+      <ul>
+      <% @sys_config.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :名稱 %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :id %>
+    <%= f.label :config_name %>
+    <%= f.text_field :config_name %>
+  </div>
+  <div class="field">
+    <%= f.label :config_value %>
+    <%= f.text_field :config_value %>
+  </div>
+  <div class="field">
+    <%= f.label :描述 %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit(value="儲存" ,class: "btn btn-primary") %> | <%= link_to '取消', sys_configs_path, class: "btn"%>
+  </div>
+<% end %>
+
+

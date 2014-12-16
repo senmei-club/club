@@ -1,0 +1,5 @@
+#encoding: utf-8
+path:
+  msg_file_dir: "E:/etc/Dropbox/club/"
+  msg_filename_pattern: "%Y%m%d"
+  msg_file_ext: ".dmg"

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @auth_level.id %>
+</p>
+
+<p>
+  <b>Level:</b>
+  <%= @auth_level.level %>
+</p>
+
+<p>
+  <b>Allowed path:</b>
+  <%= @auth_level.allowed_path %>
+</p>
+
+<p>
+  <b>Action:</b>
+  <%= @auth_level.action %>
+</p>
+
+
+<%= link_to 'Edit', edit_auth_level_path(@auth_level) %> |
+<%= link_to 'Back', auth_levels_path %>

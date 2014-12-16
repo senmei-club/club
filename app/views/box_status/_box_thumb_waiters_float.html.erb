@@ -1,0 +1,53 @@
+#encoding: utf-8
+
+<div class="waiters">
+
+  <ul class="thumbnails">
+  <%
+    if bs[:waiters].size > bs[:max] 
+      max =  bs[:max] 
+      more = true
+    else
+      max = bs[:waiters].size
+      more = false
+    end
+
+    (0...max).each do |key|
+     
+  %>
+
+    
+    <% #init user data
+      if !bs[:waiters][key].nil?
+        nickname = bs[:waiters][key][:nickname].length >5 ? "#{bs[:waiters][key][:nickname][0..4]}.." : bs[:waiters][key][:nickname] 
+        nickname += ":"
+        stay_time = bs[:waiters][key][:time]
+      else
+        nickname = ""
+        stay_time = 0
+      end
+    %>
+  
+    <li>
+      <div class="thumbnail">
+        <div class="waiter">
+          <span class="wname_<%= "#{bs[:r_no]}_#{key}" %>"><%= nickname %></span>
+        </div>
+        <div class="waiter_stay_time_div"> 
+          <span id="clock_timer_stay_<%= "#{bs[:r_no]}_#{key}" %>"></span>
+          <%= hidden_field_tag "timer_stay_#{bs[:r_no]}_#{key}" , stay_time %>
+        </div>
+      </div>
+    </li>
+
+  <% end %>
+  </ul><!-- end of inside box row -->
+  
+  <% 
+    more_link_style = "display: none; width:100%; background-color:red;"
+    more_link_style = "" if more
+  %>
+  <div class="span12 more_link" style="<%= more_link_style %>">
+    > 詳細人員列表 <
+  </div>
+</div>

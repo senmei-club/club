@@ -1,0 +1,29 @@
+#encoding: utf-8
+<h2>系統設定</h2>
+<span class="label label-important">注意！</span>此頁為系統設定，請勿隨意更動！
+
+<table class="table">
+  <tr>
+    <th>名稱</th>
+    <th>Config name</th>
+    <th>Config value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sys_configs.each do |sys_config| %>
+  <tr>
+    <td><%= sys_config.name %></td>
+    <td><%= sys_config.config_name %></td>
+    <td><%= sys_config.config_value %></td>
+    <td><%= link_to '檢視', sys_config, class: "btn btn-info"  %></td>
+    <td><%= link_to '編輯', edit_sys_config_path(sys_config), class: "btn btn-primary" %></td>
+    <td><%= link_to '刪除', sys_config, confirm: '確定要刪除?', method: :delete ,class: "btn btn-danger" %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to '新增系統變數', new_sys_config_path, class: "btn btn-warning" %>

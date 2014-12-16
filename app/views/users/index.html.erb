@@ -1,0 +1,48 @@
+#encoding: utf-8
+<p><h2>使用者列表</h2></p>
+
+<%= form_for( @search, html: {class: "form-search"}) do |f| %>
+  <%= link_to '新增使用者', new_user_path , class: "btn btn-warning" %> 
+  <%= f.label :卡號, class: "control-label" %>
+  <%= f.text_field :card_id_contains, class: "span2 search-query" %>
+  <%= f.label :姓名, class: "control-label" %>
+  <%= f.text_field :name_contains, class: "span2 search-query" %>
+  <%= f.label :綽號, class: "control-label" %>
+  <%= f.text_field :nickname_contains, class: "span2 search-query" %>
+  <%= f.label :人員類別, class: "control-label" %>
+  <%= f.select :user_type_equals, {所有類型: nil}.merge!(user_type_map), class: "span2 search-query" %>
+  <%= f.submit :搜尋, class: "btn" %>
+  <%= f.button :清除條件, type: "button", class: "btn", onclick:"javascript: location.href='/users'"%>
+<% end %>
+
+<table class="table">
+  <tr>
+    <th>門禁卡ID</th>
+    <th>登入帳號</th>
+    <th>姓名</th>
+    <th>綽號</th>
+    <th>人員類別</th>
+    <th>權限等級</th>
+    <th>是否顯示</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.card_id %></td>
+    <td><%= user.account %></td>
+    <td><%= user.name %></td>
+    <td><%= user.nickname %></td>
+    <td><%= user_type_to_string(user.user_type) %></td>
+    <td><%= auth_level_to_string(user.auth_level) %></td>
+    <td><%= user.display? ? "是" : "否" %></td>
+    <td><%= link_to '檢視', user, class: "btn btn-info" %></td>
+    <td><%= link_to '編輯', edit_user_path(user), class: "btn btn-primary" %></td>
+    <td><%= link_to '刪除', user, confirm: '確定要刪除?', method: :delete ,class: "btn btn-danger" %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= paginate @users %>

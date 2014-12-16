@@ -1,0 +1,41 @@
+#encoding: utf-8
+
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%=flash[:notice] %>
+    </div>
+  <% end %>
+</div>
+
+<div class="container well">
+  <p>
+    <b>原始資料串</b>
+    <%= @user_box_record.data_string %>
+  </p>
+
+  <p>
+    <b>門禁卡ID:</b>
+    <%= @user_box_record.card_id %>
+  </p>
+
+  <p>
+    <b>包廂ID</b>
+    <%= @user_box_record.box_id %>
+  </p>
+
+  <p>
+    <b>包廂門禁機ID:</b>
+    <%= @user_box_record.machine_id %>
+  </p>
+
+  <p>
+    <b>時間:</b>
+    <%= @user_box_record.time.strftime("%Y-%m-%d %H:%M") %>
+  </p>
+
+  <% if can? :update, UserBoxRecord %>
+    <%= link_to '編輯', edit_user_box_record_path(@user_box_record), class: "btn btn-primary" %> |
+  <% end %>
+  <%= link_to '返回', user_box_records_path, class: "btn btn-default"%>
+</div>

@@ -1,0 +1,55 @@
+#encoding: utf-8
+<p><h2>包廂記錄列表</h2></p>
+
+<%= form_for( @search, html: {class: "form-search"}) do |f| %>
+  <% if can? :create,BoxRecord %>
+    <%= link_to '新增包廂記錄', new_box_record_path , class: "btn btn-warning" %> 
+  <% end %>
+  <%= f.label :包廂名稱, class: "control-label" %>
+  <%= f.select :box_id_equals, {不指定: nil}.merge!(@bs), class: "span2 search-query" %>
+
+  <%= f.submit :搜尋, class: "btn" %>
+  <%= f.button :清除條件, type: "button", class: "btn", onclick:"javascript: location.href='/#{params[:controller]}'"%></br>
+  
+  <%= f.label :起始時間, class: "control-label" %>
+  <%= f.datetime_select :start_time_greater_than_or_equal_to, use_month_numbers: true ,:default => 1.days.ago %></br>
+  <%= f.label :結束時間, class: "control-label" %>
+  <%= f.datetime_select :end_time_less_than_or_equal_to, use_month_numbers: true %>
+   
+<% end %>
+
+<!--
+<form class="well form-search">
+  <input id="search" name="search" type="text" class="input-medium search-query">
+  <button type="submit" class="btn">搜尋紀錄ID</button>
+</form>
+-->
+<% if !@box_records.empty? %>
+  <table class="table table-striped">
+    <tr>
+      <th>包廂</th>
+      <th>包廂開啟時間</th>
+      <th>包廂結束時間</th>
+      <th>經理</th>
+      <th>客人數</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @box_records.each do |box_record| %>
+    <tr>
+      <td><%= @bs.invert[box_record.box_id] %></td>
+      <td><%= box_record.start_time.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= box_record.end_time.strftime("%Y-%m-%d %H:%M") %></td>
+      <td><%= @managers.invert[box_record.manager_id] %></td>
+      <td><%= box_record.customers %></td>
+      <td><%= link_to '檢視', box_record , class: "btn btn-info" %></td>
+      <td><%= link_to( '編輯', edit_box_record_path(box_record), class: "btn btn-primary") if can? :update, BoxRecord %></td>
+      <td><%= link_to( '刪除', box_record, confirm: '確定要刪除嗎?', method: :delete, class: "btn btn-danger") if can? :destroy, BoxRecord %></td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>
+
+<%= paginate @box_records %>

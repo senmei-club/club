@@ -1,0 +1,48 @@
+#encoding: utf-8
+<li>
+  <a id="room_<%=bs[:r_no]%>" class="<%=bs[:css]%>" href="/box_status/<%=bs[:id]%>">
+    <div class="room_div">
+      <div class="badge"><%=bs[:name]%></div>
+      
+      <div class="wname_only_container">
+        <ul class="thumbnails">
+
+          <%
+            if bs[:waiters].size > bs[:max] 
+              max =  bs[:max] 
+              more = true
+            else
+              max = bs[:waiters].size
+              more = false
+            end
+
+            (0...max).each do |key|
+            
+              if !bs[:waiters][key].nil?
+                nickname = bs[:waiters][key][:nickname].length >5 ? "#{bs[:waiters][key][:nickname][0..4]}.." : bs[:waiters][key][:nickname] 
+              else
+                nickname = ""
+              end
+          %>
+            <li>
+              <div class="thumbnail">
+                <div class="waiter">
+                  <span class="wname_<%= "#{bs[:r_no]}_#{key}" %>"><%= nickname %></span>
+                </div>
+              </div>
+            </li>
+          <% 
+            end 
+          %>
+          
+          <% if more %>
+          <div class="span12 more_link">
+            > 詳細人員列表 <
+          </div>
+          <% end %>
+        </ul>
+      </div>
+      
+    </div>
+  </a>
+</li>

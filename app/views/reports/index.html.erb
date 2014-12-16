@@ -1,0 +1,90 @@
+#encoding: utf-8
+<div class="info-warning">報表產生需較多時間，按下搜尋後請稍候。</div>
+<p>
+  <form action="<%= "/#{params["controller"]}" %>" class="form-search" method="GET" >
+
+    <%= label_tag :起始時間, nil, style: "display: inline" %>
+    <%= datetime_select :report, :start_time , :default => 1.days.ago , use_month_numbers: true%></br>
+    <%= label_tag :結束時間, nil, style: "display: inline" %>
+    <%= datetime_select :report, :end_time, use_month_numbers: true %>
+    <br>
+    <%= label_tag :包廂名稱, nil, style: "display: inline" %>
+    <%= select_tag :box_id , options_for_select( @bs,params[:box_id]), include_blank: true , class: "span2 search-query" %>
+
+    <%= label_tag :人員, nil, style: "display: inline" %>
+    <%= select_tag :user_id, options_for_select( @user_ids,params[:user_id]), include_blank: true , class: "span2 search-query" %>
+    
+    <%= button_tag :搜尋, class: "btn" %>
+    
+    <%= button_tag :清除條件, type: "button", class: "btn", onclick:"javascript: location.replace='/#{params[:controller]}'"%></br>
+    
+  <form>
+</p>
+
+<table class="table table-bordered table-striped report_table">
+    <th class="box_name">包廂</th>
+    <th class="box_manager">經理</th>
+    <th class="start_time">包廂開啟時間</th>
+    <th class="end_time">包廂結束時間</th>
+    <th class="waiters">人員資料</th>
+  </tr>
+
+<% @reports_resort.each do |record_id,report| %>
+  <tr>
+    <td><%= @bs.invert[report[:box_id]] %></td>
+    <td><%= @usernames[report[:manager_id]] %></td>
+    <td><%= report[:start_time].strftime("%Y-%m-%d %H:%M") %></td>
+    <td><%= report[:end_time].strftime("%Y-%m-%d %H:%M") %></td>
+    <td>
+      <%
+        if !report[:waiters].empty?
+          report[:waiters].each do |user_id, user_records|  
+      %>
+            <table class="table">
+              <tr>
+                <th class="waiter">姓名</th>
+                <th class="entry">進入時間</th>
+                <th class="leave">離開時間</th>
+                <th class="minutes">小記</th>
+              </tr>
+              
+              <%
+                i = 0
+                user_time_sum = 0
+                user_records.each do |user_record|
+                
+              %>  
+                <tr>
+                <%
+                i += 1
+                
+                if i == 1
+                %>
+                  <td rowspan='<%=user_records.size%>'><%=@usernames[user_id]%></td> 
+                <% end %>
+                
+                  <td><%= user_record[:entry_time].strftime("%F %T") %></td>
+                  <td><%= user_record[:leave_time].strftime("%F %T") unless user_record[:leave_time].nil? %></td>
+                  <td>
+                    <%
+                      unless user_record[:leave_time].nil? 
+                        tmp = user_record[:leave_time] - user_record[:entry_time]
+                        user_time_sum += tmp
+                      end
+                    %>
+                    <%=(Time.local(2000, 1, 1) + tmp).strftime("%T") unless user_record[:leave_time].nil? %>
+                  </td>
+                </tr>
+              <% end %>
+              
+              <td colspan="3">總計</td>
+              <td class><%=(Time.local(2000, 1, 1) + (user_time_sum)).strftime("%T")%></td>
+            </table>
+      <%
+          end
+        end 
+      %>
+    </td>
+  </tr>
+<% end %>
+</table>

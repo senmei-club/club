@@ -1,0 +1,33 @@
+<%= form_for(@auth_level) do |f| %>
+  <% if @auth_level.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@auth_level.errors.count, "error") %> prohibited this auth_level from being saved:</h2>
+
+      <ul>
+      <% @auth_level.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :id %><br />
+    <%= f.number_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :level %><br />
+    <%= f.number_field :level %>
+  </div>
+  <div class="field">
+    <%= f.label :allowed_path %><br />
+    <%= f.text_field :allowed_path %>
+  </div>
+  <div class="field">
+    <%= f.label :action %><br />
+    <%= f.text_field :action %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

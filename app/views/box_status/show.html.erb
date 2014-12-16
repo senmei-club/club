@@ -1,0 +1,137 @@
+#encoding: utf-8
+<style>
+  .container {
+    font-size: 18px ;
+  }
+</style>
+
+<% if @bs[:end_time].nil? %>
+  <div class="well">
+    <span class="label label-important">注意!!</span> 該包廂目前尚未開啟，如要開啟包廂請點'編輯'
+  </div>
+<% end %>
+  
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%=flash[:notice] %>
+    </div>
+  <% end %>
+</div>
+
+<div class="container well">
+  <p>
+    <button type="button" class="btn <%= @bs[:end_time].nil? ? "btn-success" : "btn-danger" %>" value=""><%=@bs[:name]%></button>
+  </p>
+  <ul>
+    <li>開始時間: <%= @bs[:start_time].strftime("%Y-%m-%d %H:%M") if !@bs[:start_time].nil? %> </li>
+    <li>結束時間: <%= @bs[:end_time].strftime("%Y-%m-%d %H:%M") if !@bs[:end_time].nil? %> </li>
+    <li>服務經理: <span class="manager"><%= @managers.invert[@bs[:manager_id]] if !@bs[:manager_id].nil? %></span></li>
+    <li>客人數: <span class="customer_count"><%=@bs[:customers] %></span></li>
+    <li>服務員:<br/>
+      <% if !@bs[:waiters].nil? %>
+        <% @bs[:waiters].each do |val| %>
+          <span class="wname"><%=val[:nickname]%></span> - 
+          <span id="clock_timer_stay_<%=val[:id]%>"></span>
+          <%= hidden_field_tag "timer_stay_" + val[:id].to_s , val[:time] %>
+          <br>
+        <% end %>
+      <% end %>
+    </li>
+  </ul>
+
+  <% if can? :update, BoxRecord %>
+    <%= link_to '編輯', "/box_records/#{@bs[:id]}/find_or_create", class: "btn btn-primary" %> |
+  <% end %>
+  
+  <% if !@bs[:end_time].nil? and ( can? :destroy, BoxRecord ) %>
+    <%= link_to '關閉包廂', "/box_records/#{@bs[:box_record_id]}/close", class: "btn btn-danger" %> |
+  <% end %>
+  
+  <%= link_to '返回', box_status_path , class: "btn"%>
+</div>
+
+<script>
+function flash( obj,duration ){
+  $(obj).fadeOut( duration / 2 );
+  $(obj).fadeIn(duration / 2 );
+}
+
+
+function get_stay_secs(start_time){
+  var now = new Date().getTime();
+  var now_sec = parseInt(now / 1000);
+  var secs = parseInt(now_sec) - start_time;
+
+  return secs; 
+}
+
+function get_elapsed_secs(end_time){
+  var now = new Date().getTime();
+  var now_sec = parseInt(now / 1000);
+  var secs = end_time - parseInt(now_sec);
+
+  if(secs < 0) secs = 0;
+    
+  return secs; 
+}
+
+function secs_to_clock( secs ) {
+  var partSeconds = Math.floor(secs) % 60;
+  var partMinutes = Math.floor(secs / 60) % 60;
+  var partHours = Math.floor(secs / 60 / 60) % 24;
+  
+  return partHours
+    + ":" + (partMinutes < 10 ? ("0" + partMinutes) : partMinutes)
+    + ":" + (partSeconds < 10 ? ("0" + partSeconds) : partSeconds);
+}
+/*
+jQuery.fn.add_stay_alert_class( secs){
+  if( secs > stay_alert_time ) {
+    this.addClass( "timer_alert" );
+  }
+}
+
+function add_elapsed_alert_class(secs){
+  if( secs < elapsed_alert_time ){}
+}
+*/
+
+$(document).ready(function(){
+
+  var stay_alert_time = <%=@configs["stay_alert_time"] ||= 900 %>;
+  var elapsed_alert_time = <%=@configs["elapsed_alert_time"] ||= 900 %>;
+  var renew_interval = 2000;
+
+  $('[id^="timer_"]').map(function(){
+
+    var tmp_id = this.id;
+    var tmp_val = this.value;
+    var timer_type = tmp_id.split("_")[1];
+
+    if(timer_type == "stay"){
+      $('#clock_' + tmp_id).html(secs_to_clock(get_stay_secs(tmp_val)));
+      if( get_stay_secs(tmp_val) > stay_alert_time){
+        $('#clock_' + tmp_id).addClass( "timer_alert" );
+        
+        eval("setInterval(\"$('#clock_"+tmp_id+"').html(secs_to_clock(get_stay_secs("+tmp_val+")));flash('#clock_"+tmp_id+"',1000);\",1000);");
+      }else{
+        eval("setInterval(\"$('#clock_"+tmp_id+"').html(secs_to_clock(get_stay_secs("+tmp_val+")));\","+renew_interval+");");      
+      }
+    }else{
+      $('#clock_' + tmp_id).html(secs_to_clock(get_elapsed_secs(tmp_val)));
+      if( get_elapsed_secs(tmp_val) < elapsed_alert_time){
+        $('#clock_' + tmp_id).addClass( "timer_alert" );
+        
+        if(get_elapsed_secs(tmp_val) == 0){
+          eval("setInterval(\"flash('#clock_"+tmp_id+"',1000);\",1000);");
+        }else{
+          eval("setInterval(\"$('#clock_"+tmp_id+"').html(secs_to_clock(get_elapsed_secs("+tmp_val+")));flash('#clock_"+tmp_id+"',1000);\",1000);");
+        }
+      }else{
+        eval("setInterval(\"$('#clock_"+tmp_id+"').html(secs_to_clock(get_elapsed_secs("+tmp_val+")));\",1000);");
+      }
+    }
+  });
+});
+</script>

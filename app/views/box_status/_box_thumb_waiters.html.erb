@@ -1,0 +1,49 @@
+#encoding: utf-8
+<div class="row waiters">
+  <div class="span12">
+  
+    <div class="row">
+    <%(0...bs[:max]).each do |key| %>
+
+      <% if (key % bs[:users_per_col]) == 0 %>
+      <div class="span<%= 12/ bs[:cols] %>">
+      <% end %>
+      
+      <% #init user data
+        if !bs[:waiters][key].nil?
+          nickname = bs[:waiters][key][:nickname].length >5 ? "#{bs[:waiters][key][:nickname][0..4]}.." : bs[:waiters][key][:nickname] 
+          nickname += ":"
+          stay_time = bs[:waiters][key][:time]
+        else
+          nickname = ""
+          stay_time = 0
+        end
+      %>
+    
+        <div class="row">
+          <div class="span6">
+            <span class="wname_<%= "#{bs[:r_no]}_#{key}" %>"><%= nickname %></span>             
+          </div>
+          <div class="span6">
+            <span id="clock_timer_stay_<%= "#{bs[:r_no]}_#{key}" %>"></span>
+            <%= hidden_field_tag "timer_stay_#{bs[:r_no]}_#{key}" , stay_time %>
+          </div>
+        </div>
+        
+      <% if ( (key+1) % bs[:users_per_col] ) == 0 %>
+      </div><!--end of cols-->
+      <% end %>
+    
+    <% end %>
+    </div><!-- end of inside box row -->
+  
+  </div><!--end of span12-->
+  
+  <% 
+    more_link_style = "display: none;"
+    more_link_style = "" if bs[:more]
+  %>
+  <div class="span12 more_link" style="<%= more_link_style %>">
+    > 詳細人員列表 <
+  </div>
+</div>

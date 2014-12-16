@@ -1,0 +1,13 @@
+#encoding: utf-8
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  hello: "Hello world"
+  views:
+    pagination:
+      first: "&laquo; 第一頁"
+      last: "最後頁 &raquo;"
+      previous: "&lsaquo; 前一頁"
+      next: "後一頁 &rsaquo;"
+      truncate: "..."

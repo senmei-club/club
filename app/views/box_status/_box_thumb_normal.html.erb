@@ -1,0 +1,23 @@
+#encoding: utf-8
+<li>
+  <a id="room_<%=bs[:r_no]%>" class="<%=bs[:css]%>" href="/box_status/<%=bs[:id]%>">
+    <div class="room_div row-fluid" >
+      <div id="<%=bs[:r_no]%>_box_switch" class="badge <%= bs[:end_time].nil? ? "badge-success" : "badge-important" %>"><%=bs[:r_no]%></div>
+
+      剩餘時間:
+        <span id="clock_timer_elapsed_<%=bs[:r_no]%>"></span>
+        <%= hidden_field_tag "timer_elapsed_" + bs[:r_no].to_s , bs[:end_time] ? bs[:end_time] : 0 %>
+      <br/>
+      服務經理: <span id="manager_<%=bs[:r_no]%>" class="manager_<%=bs[:r_no]%>"><%=bs[:manager] if !bs[:manager].nil? %></span>
+      <br/>
+      客人數: <span id="customer_count_<%=bs[:r_no]%>"><%=bs[:customers] if !bs[:customers].nil? %></span>
+      <br/>
+      服務員:
+      
+      <% if !bs[:waiters].nil? %>
+        <%= render partial: "box_thumb_waiters_float", locals: { bs: bs} %>      
+      <% end %>
+
+    </div>
+  </a>
+</li>

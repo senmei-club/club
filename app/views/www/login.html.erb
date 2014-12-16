@@ -1,0 +1,26 @@
+#encoding: utf-8
+<div id="login_main_container">
+
+  <div id="login_container_border">
+
+    <div id="login_container">
+      <%= form_tag "/login", :method => "post", class: "well" do %>
+        <%= label_tag :account,"帳號" %>
+        <%= text_field_tag :account, nil, {class: "span3", placeholder: "輸入帳號.."} %>
+        <br>
+        <%= label_tag :password,"密碼" %>
+        <%= password_field_tag :password , nil, {class: "span3", placeholder: "輸入密碼.."} %>
+        <%# button_tag "登入", id: "login_btn" , class: "btn btn-primary" %>
+        <br/>
+        <% if flash[:notice] %>
+          <div class="alert alert-error">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4><%=flash[:notice]%></h4>
+          </div>
+        <% end %>
+        <input type="submit" id="login_btn" class="btn btn-primary" value="登入">
+      <% end %>
+    </div>
+  </div>
+</div>
+ 

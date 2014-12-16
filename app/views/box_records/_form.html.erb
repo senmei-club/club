@@ -1,0 +1,81 @@
+#encoding: utf-8
+<%= form_for(@box_record) do |f| %>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-error">
+      <h4><%=flash[:notice]%></h4>
+    </div>
+  <% end %>
+
+  <% if @box_record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@box_record.errors.count, "error") %> prohibited this box_record from being saved:</h2>
+
+      <ul>
+        <% @box_record.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :id %>
+  <table class="table">
+    <tr>
+      <td> 
+        <%= f.label :包廂 %>
+      </td>
+      <td> 
+        <%= f.select :box_id, @bs , selected: params[:box_id] || @box_record.box_id %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :包廂開始時間 %>
+      </td>
+      <td> 
+        <%= f.datetime_select :start_time %>
+      </td>
+    </tr>
+    <tr>
+      <td>    
+        <%= f.label :包廂結束時間 %>
+      </td>
+      <td> 
+        <%= f.datetime_select :end_time ,default: Time.now + 60 * 60 * 2 %>
+      </td>
+    </tr>
+    <tr>
+      <td> 
+        <%= f.label :經理 %>
+      </td>
+      <td>    
+        <%= f.select :manager_id, @managers %>
+      </td>
+    </tr>
+    <tr>
+      <td> 
+        <%= f.label :客人數 %>
+      </td>
+      <td>    
+        <%= f.number_field :customers, value: @box_record.customers %>
+      </td>
+    </tr>
+    <tr>
+      <td> 
+        <%= f.submit value:"儲存",class: "btn btn-primary" %>
+      </td>
+      <td>
+        <% 
+          cur_time = Time.now.to_i
+          if @box_record.start_time.to_i < cur_time and @box_record.end_time.to_i > cur_time
+            path = box_status_path
+          else
+            path = box_records_path
+          end
+        %>
+        <%= link_to '取消', box_records_path , class:"btn"%>
+      </td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,25 @@
+#encoding: utf-8
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>名稱:</b>
+  <%= @sys_config.name %>
+</p>
+
+<p>
+  <b>Config name:</b>
+  <%= @sys_config.config_name %>
+</p>
+
+<p>
+  <b>Config value:</b>
+  <%= @sys_config.config_value %>
+</p>
+
+<p>
+  <b>描述:</b>
+  <%= @sys_config.description %>
+</p>
+
+<%= link_to '編輯', edit_sys_config_path(@sys_config), class: "btn btn-primary"  %> |
+<%= link_to '回列表', sys_configs_path, class: "btn" %>

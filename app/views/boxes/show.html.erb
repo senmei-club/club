@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @box.id %>
+</p>
+
+<p>
+  <b>Machine:</b>
+  <%= @box.machine_id %>
+</p>
+
+<p>
+  <b>r_no:</b>
+  <%= @box.r_no %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @box.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @box.size_type %>
+</p>
+
+<p>
+  <b>css_class:</b>
+  <%= @box.css_class %>
+</p>
+
+<p>
+  <b>display_users:</b>
+  <%= @box.display_users %>
+</p>
+
+<p>
+  <b>display_cols:</b>
+  <%= @box.display_cols %>
+</p>
+
+<%= link_to 'Edit', edit_box_path(@box) %> |
+<%= link_to 'Back', boxes_path %>

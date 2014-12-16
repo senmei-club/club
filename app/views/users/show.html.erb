@@ -1,0 +1,49 @@
+#encoding: utf-8
+<div class="container">
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%=flash[:notice] %>
+    </div>
+  <% end %>
+</div>
+
+<h3>
+  <b>門禁卡ID:</b>
+  <%= @user.card_id %>
+</h3>
+
+<h3>
+  <b>登入帳號:</b>
+  <%= @user.account %>
+</h3>
+
+<h3>
+  <b>姓名:</b>
+  <%= @user.name %>
+</h3>
+
+<h3>
+  <b>綽號:</b>
+  <%= @user.nickname %>
+</h3>
+
+<h3>
+  <b>人員類別:</b>
+  <%= user_type_to_string(@user.user_type) %>
+</h3>
+
+<h3>
+  <b>權限等級:</b>
+  <%= auth_level_to_string(@user.auth_level) %>
+</h3>
+
+<h3>
+  <b>是否顯示:</b>
+  <%= @user.display? ? "是" : "否" %>
+</h3>
+
+
+<br>
+
+<%= link_to '編輯', edit_user_path(@user) ,class: "btn btn-primary" %> |
+<%= link_to '返回', users_path ,class: "btn btn-default" %>
